@@ -13,12 +13,14 @@ const App = () => {
   const [selectedMerchant, selectMerchant] = useState("");
   const [giftCardAmount, setGiftCardAmount] = useState(0);
   const [orders, setOrders] = useState([]);
+  const [cashbackExpected, setCashbackExpected] = useState(0);
   const [editId, setEditId] = useState("");
 
   const toggleInput = () => {
     setEditId("");
     selectMerchant("");
     setGiftCardAmount();
+    setCashbackExpected(0);
     setShowInputSection(!showInputSection);
   };
 
@@ -32,9 +34,7 @@ const App = () => {
         merchantName: selectedMerchant,
         discountPercent: 4,
         totalAmount: parseInt(giftCardAmount),
-        cashbackExpected: Number(
-          ((parseInt(giftCardAmount) * 4) / 100).toFixed(2)
-        ),
+        cashbackExpected: Number((parseInt(giftCardAmount) * 0.04).toFixed(2)),
       };
       if (editId) {
         try {
@@ -54,14 +54,19 @@ const App = () => {
       setOrders(updatedOrders);
 
       selectMerchant("");
-      setGiftCardAmount();
+      setGiftCardAmount(0);
+      setCashbackExpected(0);
 
       setShowInputSection(!showInputSection);
     }
   };
 
   const handleInputChange = (event) => {
-    setGiftCardAmount(event.target.value);
+    const amount = event.target.value;
+    setGiftCardAmount(amount);
+    if (amount != 0) {
+      setCashbackExpected(Number(parseFloat(amount) * 0.04).toFixed(2));
+    }
   };
 
   const handleDelete = async (item) => {
@@ -78,6 +83,7 @@ const App = () => {
     setEditId(item._id);
     selectMerchant(item.merchantName);
     setGiftCardAmount(item.totalAmount);
+    setCashbackExpected(Number(parseFloat(item.totalAmount * 0.04)).toFixed(2));
     setShowInputSection(!showInputSection);
   };
 
@@ -195,6 +201,12 @@ const App = () => {
               </option>
             ))}
           </select>
+        </div>
+        <div className="discount-container">
+          <div className="discount-view"> 4% Cashback</div>
+          <div className="discount-view">
+            {cashbackExpected} <br /> Cashback Expected
+          </div>
         </div>
 
         <div className="input-container">

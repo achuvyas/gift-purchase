@@ -105,6 +105,31 @@ html, body {
 
 }
 
+.discount-container {
+
+  width: 40%;
+  height: 10vh;
+  display: flex;
+  margin-top: 50px;
+  display: flex;
+  /* justify-content: space-between; */
+ }
+
+ .discount-view {
+
+  width: 200px;
+  height: 80px;
+  border-radius: 10px;
+  background-color: gray;
+  margin-right: 20px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+ }
+
 .drop-box-ctn {
 
   width: 50%;
